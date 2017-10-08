@@ -3,6 +3,11 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 import java.util.*;
 
+/**
+ * Written by Andrew Harris (etotheitauequalsone@gmail.com) to solve FiveThirtyEight Classic Posted Oct. 6.
+ */
+
+
 public class Main {
 
     public static void main(String[] args) {
@@ -19,7 +24,6 @@ public class Main {
      * @param numOpens the number of boxes each player may open
      */
     public static void testStrategy(int numPlayers, int numOpens, int samples){
-        Random random = new Random();
         System.out.println("Players : " + numPlayers);
         System.out.println("Opens/Player: " + numOpens);
         List<String> playerNames = new ArrayList<>();
