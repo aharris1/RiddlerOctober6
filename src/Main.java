@@ -1,34 +1,51 @@
 import javafx.util.Pair;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import java.util.*;
 
 public class Main {
 
     public static void main(String[] args) {
+        testStrategy(4, 2, 1000000);
+        //Note: Using a sufficient sample size to expect even 1 success in the naive case w/ 100 players & 50 opens
+        // would take way to long to simulate.
+        //System.out.println("Extra Credit: ");
+        //testStrategy(100, 50, 100000000);
+    }
+
+    /**
+     * Tests an arbitrary game show format
+     * @param numPlayers the number of players on the team
+     * @param numOpens the number of boxes each player may open
+     */
+    public static void testStrategy(int numPlayers, int numOpens, int samples){
+        Random random = new Random();
+        System.out.println("Players : " + numPlayers);
+        System.out.println("Opens/Player: " + numOpens);
         List<String> playerNames = new ArrayList<>();
-        playerNames.add("Jerry");
-        playerNames.add("Tom");
-        playerNames.add("Bill");
-        playerNames.add("Jeb");
-        playerNames.add("Jake");
-        playerNames.add("Jeff");
-        playerNames.add("Jim");
-        playerNames.add("George");
-        playerNames.add("Satan");
-        playerNames.add("Buddha");
-        System.out.println(playerNames);
+        while(playerNames.size() < numPlayers){
+            String name = RandomStringUtils.randomAlphabetic(2);
+            if(!playerNames.contains(name)){
+                playerNames.add(name);
+            }
+        }
         Collections.sort(playerNames);
-        System.out.println(playerNames);
+        //System.out.println(playerNames);
         int successesNaive = 0;
         int successesSmart = 0;
-        int samples = 100000;
-        for(long i = 0; i < samples; i ++){
-            if(attemptNaive(playerNames, generateBoxes(playerNames), 5)){
+        for(long i = 0; i < samples; i++){
+            if(i % (samples/10) == 0){
+                System.out.println(i * 100.0 / samples);
+            }
+            if(attemptNaive(playerNames, generateBoxes(playerNames), numOpens)){
                 successesNaive++;
             }
         }
         for(long i = 0 ; i < samples; i++){
-            if(attemptSmart(playerNames, generateBoxes(playerNames), 5)){
+            if(i % (samples/10) == 0){
+                System.out.println(i * 100.0 / samples);
+            }
+            if(attemptSmart(playerNames, generateBoxes(playerNames), numOpens)){
                 successesSmart++;
             }
         }
